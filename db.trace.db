@@ -130,3 +130,23 @@ drop table if exists userModel CASCADE  [42001-212]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "create table [*]userModel (id bigint not null, email varchar(255), login varchar(255), name varchar(255), password_hash varchar(255), password_salt varchar(255), role varchar(255), surname varchar(255), primary key (id))"; oczekiwano "identifier"
 Syntax error in SQL statement "create table [*]userModel (id bigint not null, email varchar(255), login varchar(255), name varchar(255), password_hash varchar(255), password_salt varchar(255), role varchar(255), surname varchar(255), primary key (id))"; expected "identifier"; SQL statement:
 create table userModel (id bigint not null, email varchar(255), login varchar(255), name varchar(255), password_hash varchar(255), password_salt varchar(255), role varchar(255), surname varchar(255), primary key (id)) [42001-212]
+2022-12-12 18:59:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "USERMODEL" nie istnieje
+Table "USERMODEL" not found; SQL statement:
+SELECT * FROM USERMODEL WHERE USERMODEL.LOGIN =? [42102-212]
+2022-12-12 18:59:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "USERMODEL" nie istnieje
+Table "USERMODEL" not found; SQL statement:
+SELECT * FROM USERMODEL WHERE USERMODEL.LOGIN =? [42102-212]
+2022-12-12 19:10:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "USERMODEL" nie istnieje
+Table "USERMODEL" not found; SQL statement:
+SELECT * FROM USERMODEL WHERE USERMODEL.LOGIN =? [42102-212]
+2022-12-12 19:10:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "USERMODEL" nie istnieje
+Table "USERMODEL" not found; SQL statement:
+SELECT * FROM USERMODEL WHERE USERMODEL.LOGIN =? [42102-212]
+2022-12-12 19:10:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "USERMODEL" nie istnieje
+Table "USERMODEL" not found; SQL statement:
+SELECT * FROM USERMODEL WHERE USERMODEL.LOGIN =? [42102-212]

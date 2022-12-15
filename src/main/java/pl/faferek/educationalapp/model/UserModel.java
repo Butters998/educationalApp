@@ -1,5 +1,6 @@
 package pl.faferek.educationalapp.model;
 
+import com.vaadin.flow.component.notification.Notification;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Component // do usunięcia?
 @Entity
@@ -15,9 +19,14 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String surname;
+    @NotEmpty
+    @Email
     private String email;
+    @NotEmpty
     private String login;
     private String passwordSalt;
     private String passwordHash;
@@ -115,5 +124,12 @@ public class UserModel {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "name='" + name + '\'' +
+                ", surname='" + surname;
     }
 }

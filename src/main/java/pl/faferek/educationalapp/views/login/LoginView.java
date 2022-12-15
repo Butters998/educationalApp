@@ -1,5 +1,6 @@
 package pl.faferek.educationalapp.views.login;
 
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
@@ -38,6 +39,7 @@ public class LoginView extends VerticalLayout {
         textFieldLogin = new TextField("Login");
         passwordFieldPassword = new PasswordField("Hasło");
         buttonLogin = new Button("Zaloguj");
+        buttonLogin.addClickShortcut(Key.ENTER);
         registerLink = new RouterLink("Zarejestruj", RegisterView.class);
         forgotPassLink = new RouterLink("Zapomniałem hasła", RegisterView.class);
 

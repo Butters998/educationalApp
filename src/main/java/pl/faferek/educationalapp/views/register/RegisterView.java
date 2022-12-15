@@ -9,6 +9,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.TransactionSystemException;
 import pl.faferek.educationalapp.model.UserModel;
 import pl.faferek.educationalapp.repository.UserRepo;
 import pl.faferek.educationalapp.service.UserService;
@@ -39,11 +40,17 @@ public class RegisterView extends VerticalLayout {
         this.userRepo = userRepo;
         this.userService = userService;
         textFieldName = new TextField("podaj imię");
+        textFieldName.setRequired(true);
         textFieldSurname = new TextField("podaj nazwisko");
+        textFieldSurname.setRequired(true);
         textFieldEmail = new TextField("podaj email");
+        textFieldEmail.setRequired(true);
         textFieldLogin = new TextField("podaj login");
+        textFieldLogin.setRequired(true);
         passwordField = new PasswordField("podaj hasło");
+        passwordField.setRequired(true);
         passwordFieldRpt = new PasswordField("powtórz hasło");
+        passwordFieldRpt.setRequired(true);
         buttonRegister = new Button("Rejestracja");
         backLink = new RouterLink("Powrót", LoginView.class);
 
@@ -70,20 +77,27 @@ public class RegisterView extends VerticalLayout {
         userModelEmail = userRepo.getByEmail(textFieldEmail.getValue());
 
 
-        if(passwordField.getValue().equals(passwordFieldRpt.getValue()) && userModelLogin.isEmpty() && userModelEmail.isEmpty()) {
+        if (!checkFields()) {
+            showNotification("Uzupełnij wszystkie pola",false);
+        }
+        else if(passwordField.getValue().equals(passwordFieldRpt.getValue()) && userModelLogin.isEmpty() && userModelEmail.isEmpty()) {
+            try {
+                UserModel userModel = new UserModel(textFieldName.getValue(),
+                        textFieldSurname.getValue(), textFieldEmail.getValue(),
+                        textFieldLogin.getValue(), passwordField.getValue());
+                        userRepo.save(userModel);
+                textFieldName.clear();
+                textFieldEmail.clear();
+                textFieldSurname.clear();
+                textFieldLogin.clear();
+                passwordField.clear();
+                passwordFieldRpt.clear();
+                showNotification("Registered", true);
+            } catch (TransactionSystemException e) {
+                showNotification("nieprawidłowy email", false);
+            }
 
-            UserModel userModel = new UserModel(textFieldName.getValue(),
-                    textFieldSurname.getValue(), textFieldEmail.getValue(),
-                    textFieldLogin.getValue(), passwordField.getValue()
-            );
-            userRepo.save(userModel);
-            textFieldName.clear();
-            textFieldEmail.clear();
-            textFieldSurname.clear();
-            textFieldLogin.clear();
-            passwordField.clear();
-            passwordFieldRpt.clear();
-            showNotification("Registered", true);
+
         } else if (userModelLogin.size() > 0) {
             showNotification("Login już istnieje",false);
         } else if (userModelEmail.size() > 0) {
@@ -95,6 +109,10 @@ public class RegisterView extends VerticalLayout {
         }
     }
 
+    public boolean checkFields() {
+        return !textFieldName.isEmpty() && !textFieldSurname.isEmpty() && !textFieldLogin.isEmpty()
+                && !textFieldEmail.isEmpty() && !passwordField.isEmpty() && !passwordFieldRpt.isEmpty();
+    }
     public void showNotification(String text, boolean success) {
         Notification notification = new Notification();
         notification.setPosition(Notification.Position.MIDDLE);
